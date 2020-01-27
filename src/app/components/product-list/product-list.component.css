@@ -1,0 +1,53 @@
+.wrapper{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.product{
+	position: relative;
+	margin: 20px;
+	width: 270px;
+	cursor: pointer;
+	transition: 0.3s;
+	background-color: white;
+	border-radius: 15px 15px 0 0;
+}
+.product:hover{
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.product:focus{
+	outline: none;
+}
+
+.product_image{
+	height: 100%;
+	width: 100%;
+	border-radius: 15px 15px 0 0 ;
+}
+
+.product_info{
+	padding: 10px;
+	margin-bottom: 30px;
+}
+
+.product_prize{
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+.product_name{
+	font-size: 1.3em;
+}
+
+.product_description{
+	font-style: italic;
+	font-size: 1.2em;
+}
+
+.cart_button{
+	position: absolute;
+	bottom: 5px;
+	right: 20px;
+}
