@@ -32,18 +32,26 @@
 	margin-bottom: 30px;
 }
 
-.product_prize{
-	font-size: 1.4em;
+
+.horizontal_flexbox{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 5px 0;
+}
+
+.product_price{
+	font-size: 1.2em;
 	font-weight: bold;
 }
 
 .product_name{
-	font-size: 1.3em;
+	font-size: 1.1em;
 }
 
 .product_description{
 	font-style: italic;
-	font-size: 1.2em;
+	font-size: 1.0em;
 }
 
 .cart_button{

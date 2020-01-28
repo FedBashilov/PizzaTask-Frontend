@@ -1,0 +1,25 @@
+<div class="main_cart" (click)="showOrHideOrderForm()">
+  <div class="main_cart_icon">
+    <img src="assets/cart.png" alt="" height="20px" width="20px">
+  </div>
+  <div class="cart_counter">
+    {{this.cartCounter}}
+  </div>
+</div>
+
+<div class="moving_order_form">
+  <div class="">
+    Cart
+  </div>
+  	<div class="product" *ngFor="let product of products; index as i;">
+      <div class="product_name">
+        {{product.name}}
+      </div>
+      <div class="product_price">
+        {{product.price}} x {{product.amount}}
+      </div>
+    </div>
+</div>
+
+<div class="curtain off" (click)="showOrHideOrderForm()">
+</div>

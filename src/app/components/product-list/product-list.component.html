@@ -1,21 +1,23 @@
 <div class="wrapper">
 	<div class="product" *ngFor="let product of allProducts; index as i;">
 		<div class="image">
-			<img class="product_image" [defaultImage]="'assets/loading.png'" [lazyLoad]='this.apiService.PHP_API_SERVER+"/product-photos/"+product.photo'>
+			<img class="product_image" [defaultImage]="'assets/loading.png'" [lazyLoad]='this.apiService.PHP_API_SERVER+"/backend/product-photos/"+product.photo'>
 		</div>
 		<div class="product_info">
-			<div class="product_prize">
-				{{product.price}} rub
-			</div>
-			<div class="product_name notranslate">
-				{{product.name}}
+			<div class="horizontal_flexbox">
+				<div class="product_name notranslate">
+					{{product.name}}
+				</div>
+				<div class="product_price">
+					{{product.price}} rub
+				</div>
 			</div>
 			<div class="product_description">
 				{{product.description}}
 			</div>
 		</div>
 		<div class="cart_button">
-			<button type="button" name="button">Add to Cart</button>
+			<button type="button" name="button" (click)="addProductToCart(product.name, product.price);">Add to Cart</button>
 		</div>
 	</div>
 </div>

@@ -1,0 +1,71 @@
+.main_cart{
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+/*moving order form*/
+.moving_order_form{
+  color: black;
+  position: fixed;
+  right: 0; top: 50px;
+  width: 400px; height: 100%;
+  background: #FFF;
+  z-index: 100;
+  transform: translateX(100%);
+  transition: 0.5s;
+  padding: 20px;
+}
+.moving_order_form.show{
+  transform: translateX(0%);
+}
+
+.moving_order_form .menu_list{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.moving_order_form .menu_item_wrapper{
+  position: relative;
+  margin: 30px;
+}
+
+.moving_order_form .menu_item{
+  position: absolute;
+  left: 0; top: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.1s;
+  color: #000;
+}
+.moving_order_form .menu_item:hover{
+  font-size: 25px;
+}
+/*-------------------------------*/
+.product{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+/*-------------------------------*/
+
+.curtain{
+  position: fixed;
+  top: 60px; left: 0;
+  width: 100%; height: 100vh;
+  background: #000;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+.curtain.off{
+  visibility: hidden;
+  opacity: 0;
+}
+.curtain.on{
+  visibility: visible;
+  opacity: 0.5;
+}

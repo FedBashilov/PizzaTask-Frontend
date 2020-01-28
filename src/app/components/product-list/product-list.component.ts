@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ApiService } from '../../services/api.service';
+import { CartService } from '../../services/cart.service';
+
 import { Product } from '../../models/product.model';
 
 
@@ -16,22 +18,24 @@ export class ProductListComponent implements OnInit {
 	public allProductsId: number[] = [];
 	public allProducts: Product[] = [];
 
-	constructor(private apiService: ApiService) { }
+	constructor(private apiService: ApiService, private cartService: CartService) { }
 
 	ngOnInit() {
-
-
 		this.apiService.getAllProductsId().subscribe( (allProductsId: number[]) => {
 	  		this.allProductsId = allProductsId;
-        console.log(allProductsId);
-
 	  	  this.allProductsId.forEach( (productId)=>{
 	  			this.apiService.getProductById(productId).subscribe( (product: Product) => {
 	  				this.allProducts.push(product);
-            console.log(product);
 	  			});
 	  		});
   		});
  }
+
+  addProductToCart(name, price){
+    //do animation
+    console.log(name, price);
+
+    this.cartService.addToCart(name, price);
+  }
 
 }

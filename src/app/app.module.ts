@@ -7,13 +7,17 @@ import { AppComponent } from './app.component';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { HeaderComponent } from './components/header/header.component';
+import { CartComponent } from './components/cart/cart.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    routingComponents
+    routingComponents,
+    HeaderComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

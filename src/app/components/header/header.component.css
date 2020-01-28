@@ -1,0 +1,22 @@
+header{
+  padding: 10px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #3d3938;
+  box-shadow: 0 0 5px #3d3938;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.site_name{
+    font-size: 2em;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+
+}
