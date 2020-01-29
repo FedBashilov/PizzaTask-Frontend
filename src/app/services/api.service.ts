@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from  'rxjs';
 
 import { Product } from  './../models/product.model';
-
+import { Order } from  './../models/order.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,10 @@ export class ApiService {
     return this.httpClient.get<Product>(`${this.PHP_API_SERVER}/API/products/${id}`);
   }
 
+  postOrder(newOrder: Order){
+    console.log("ff");
+
+    return this.httpClient.post(`${this.PHP_API_SERVER}/API/orders`, {data: newOrder} );
+  }
 
 }

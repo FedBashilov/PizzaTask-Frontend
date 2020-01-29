@@ -31,11 +31,11 @@ export class ProductListComponent implements OnInit {
   		});
  }
 
-  addProductToCart(name, price){
+  addProductToCart(id, name, price){
     //do animation
-    console.log(name, price);
+    console.log(id, name, price);
 
-    this.cartService.addToCart(name, price);
+    this.cartService.addToCart(id, name, price);
   }
 
 }

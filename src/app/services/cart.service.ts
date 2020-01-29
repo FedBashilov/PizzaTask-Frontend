@@ -8,12 +8,12 @@ import { CartItem } from '../models/cart-item.model';
 })
 export class CartService {
   items = [];
-  
+
   private cartCounterSubject = new BehaviorSubject<number>(0);
   cartCounter = this.cartCounterSubject.asObservable();
   counter: number = 0;
 
-  addToCart(name, price) {
+  addToCart(id, name, price) {
     this.cartCounterSubject.next(++this.counter);
 
     for(let i=0; i<this.items.length; i++){
@@ -24,6 +24,7 @@ export class CartService {
     }
 
     let newItem: CartItem = new CartItem;
+    newItem.id = id;
     newItem.name = name;
     newItem.price = price;
     newItem.amount = 1;
@@ -32,9 +33,9 @@ export class CartService {
 
   }
 
-  deleteFromCart(name){
+  deleteFromCart(id){
     for(let i=0; i<this.items.length; i++){
-      if(this.items[i].name==name){
+      if(this.items[i].id==id){
         if(this.items[i].amount>1){
           this.items[i].amount--;
         } else {
