@@ -18,7 +18,7 @@ export class ProductListComponent implements OnInit {
 	public allProductsId: number[] = [];
 	public allProducts: Product[] = [];
 
-	constructor(private apiService: ApiService, private cartService: CartService) { }
+	constructor(public apiService: ApiService, private cartService: CartService) { }
 
 	ngOnInit() {
 		this.apiService.getAllProductsId().subscribe( (allProductsId: number[]) => {
