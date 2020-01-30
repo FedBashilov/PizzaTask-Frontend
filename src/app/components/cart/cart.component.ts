@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from "rxjs";
 
 import { CartService } from '../../services/cart.service';
@@ -19,7 +19,7 @@ export class CartComponent implements OnInit, OnDestroy {
   public products = [];
   public cartCounter: number;
 
-  constructor(private apiService: ApiService, private cartService: CartService, private fb: FormBuilder ) {
+  constructor(private apiService: ApiService, public cartService: CartService, private fb: FormBuilder ) {
     this.subscription=this.cartService.cartCounter.subscribe(cartCounter => { this.cartCounter = cartCounter; });
   }
 
@@ -32,11 +32,26 @@ export class CartComponent implements OnInit, OnDestroy {
 
   initForm(){
    this.orderForm = this.fb.group({
-    name: ['Иван'],
-    phone: ['+7'],
-    email: [null],
-    address: [null],
-    comment: [null]
+    name: ['Иван', [
+      Validators.required,
+      Validators.pattern(/^[A-z]+$/)
+    ]
+  ],
+    phone: ['+7', [
+      Validators.required,
+      Validators.pattern(/^(\+)?[0123456789]+$/)
+    ]
+  ],
+    email: ['', [
+      Validators.required,
+      Validators.email
+    ]
+  ],
+    address: ['',[
+      Validators.required
+    ]
+  ],
+    comment: ['']
    });
   }
 
@@ -68,29 +83,30 @@ export class CartComponent implements OnInit, OnDestroy {
      order.products[i].id = cartItems[i].id;
      order.products[i].amount = cartItems[i].amount;
    }
-
-   console.log(order);
+   this.cartService.clearCart();
+   this.products=this.cartService.getItems();
    this.apiService.postOrder(order).subscribe();
+
   }
 
  showOrHideOrderForm(){
-   let movingOrderForm: any = document.getElementsByClassName("moving_order_form")[0];
+   let containerOrder: any = document.getElementsByClassName("container_order")[0];
+   let mainCart: any = document.getElementsByClassName("main_cart")[0];
    let curtain: any = document.getElementsByClassName("curtain")[0];
 
-   if(movingOrderForm.classList.contains("show")){
-     movingOrderForm.classList.remove("show");
+   if(containerOrder.classList.contains("show")){
+     containerOrder.classList.remove("show");
+     mainCart.classList.remove("active");
      curtain.classList.remove("on");
      curtain.classList.add("off");
    } else {
-     movingOrderForm.classList.add("show");
+     containerOrder.classList.add("show");
+     mainCart.classList.add("active");
      curtain.classList.remove("off");
      curtain.classList.add("on");
 
      this.products = this.cartService.getItems();
      //this.cartCounter = this.cartService.getItems();
-
-     console.log(this.products);
-
    }
 
  }

@@ -53,6 +53,7 @@ export class CartService {
 
   clearCart() {
     this.items = [];
+    this.cartCounterSubject.next(this.counter=0);
     return this.items;
   }
 }
