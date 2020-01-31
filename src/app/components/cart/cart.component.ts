@@ -18,13 +18,15 @@ export class CartComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   public products = [];
   public cartCounter: number;
+  public totalPrice: number;
 
   constructor(private apiService: ApiService, public cartService: CartService, private fb: FormBuilder ) {
-    this.subscription=this.cartService.cartCounter.subscribe(cartCounter => { this.cartCounter = cartCounter; });
+    this.subscription = this.cartService.cartCounter.subscribe(cartCounter => { this.cartCounter = cartCounter; });
   }
 
   ngOnInit() {
     this.initForm();
+    this.totalPrice = this.cartService.getTotalPrice();
  }
   ngOnDestroy(){
     this.subscription.unsubscribe();
@@ -32,18 +34,17 @@ export class CartComponent implements OnInit, OnDestroy {
 
   initForm(){
    this.orderForm = this.fb.group({
-    name: ['Иван', [
+    name: ['', [
       Validators.required,
       Validators.pattern(/^[A-z]+$/)
     ]
   ],
-    phone: ['+7', [
+    phone: ['', [
       Validators.required,
       Validators.pattern(/^(\+)?[0123456789]+$/)
     ]
   ],
     email: ['', [
-      Validators.required,
       Validators.email
     ]
   ],
@@ -55,18 +56,26 @@ export class CartComponent implements OnInit, OnDestroy {
    });
   }
 
+  isControlInvalid(controlName: string): boolean {
+  const control = this.orderForm.controls[controlName];
+
+   const result = control.invalid && control.touched;
+
+   return result;
+  }
+
   onSubmit() {
-  //const controls = this.orderForm.controls;
+  const controls = this.orderForm.controls;
 
    /** Проверяем форму на валидность */
-   //if (this.orderForm.invalid) {
+   if (this.orderForm.invalid) {
     /** Если форма не валидна, то помечаем все контролы как touched*/
-  //  Object.keys(controls)
-  //   .forEach(controlName => controls[controlName].markAsTouched());
+    Object.keys(controls)
+     .forEach(controlName => controls[controlName].markAsTouched());
 
      /** Прерываем выполнение метода*/
-  //   return;
-  //  }
+     return;
+    }
 
    /** TODO: Обработка данных формы */
 
@@ -85,9 +94,11 @@ export class CartComponent implements OnInit, OnDestroy {
    }
    this.cartService.clearCart();
    this.products=this.cartService.getItems();
+   this.totalPrice = this.cartService.getTotalPrice();
    this.apiService.postOrder(order).subscribe();
 
-  }
+}
+
 
  showOrHideOrderForm(){
    let containerOrder: any = document.getElementsByClassName("container_order")[0];
@@ -106,6 +117,7 @@ export class CartComponent implements OnInit, OnDestroy {
      curtain.classList.add("on");
 
      this.products = this.cartService.getItems();
+     this.totalPrice = this.cartService.getTotalPrice();
      //this.cartCounter = this.cartService.getItems();
    }
 

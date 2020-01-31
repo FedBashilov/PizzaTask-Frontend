@@ -17,27 +17,46 @@
         {{product.name}}
       </div>
       <div class="product_price">
-        {{product.price}} x {{product.amount}}
+        {{product.price}}$ x {{product.amount}}
       </div>
+
       <div class="plus_minus_product">
-        <button type="button" name="minus_product" (click)="this.cartService.deleteFromCart(product.id); ">-</button>
+        <button type="button" name="minus_product"
+        (click)="this.cartService.deleteFromCart(product.id);
+        this.products = this.cartService.getItems();
+        this.totalPrice = this.cartService.getTotalPrice(); ">-</button>
         <div>
           1
         </div>
-        <button type="button" name="minus_product" (click)="this.cartService.addToCart(product.id, product.name, product.price);">+</button>
+        <button type="button" name="minus_product"
+        (click)="this.cartService.addToCart(product.id, product.name, product.price);
+        this.products = this.cartService.getItems();
+        this.totalPrice = this.cartService.getTotalPrice();">+</button>
       </div>
+    </div>
+    <div class="total">
+      total: {{totalPrice}}
     </div>
     <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
       <label for="name">Name</label>
       <input type="text" id="name" formControlName="name" />
+      <div class="error" *ngIf="isControlInvalid('name')">
+        The name must consist only of English letters
+      </div>
       <br/><br/>
 
       <label for="phone">Phone</label>
       <input type="text" id="phone" formControlName="phone" />
+      <div class="error" *ngIf="isControlInvalid('phone')">
+        A phone number can only consist of numbers and a plus sign
+      </div>
       <br/><br/>
 
       <label for="address">Address</label>
       <input type="text" id="address" formControlName="address" />
+      <div class="error" *ngIf="isControlInvalid('address')">
+        Please enter the delivery address
+      </div>
       <br/><br/>
 
       <label for="email">Email</label>
@@ -48,13 +67,11 @@
       <textarea rows="5" cols="45" name="text" formControlName="comment" ></textarea>
       <br/><br/>
 
-      <p><input type="checkbox" name="policy" value="policy" checked> I agree to the processing of personal data</p>
+      <p><input type="checkbox" name="policy" value="policy" checked readonly> I agree to the processing of personal data</p>
 
       <button type="submit">Make an order</button>
     </form>
-    <div>
-   {{orderForm.value | json}}
-    </div>
+
   </div>
 </div>
 
