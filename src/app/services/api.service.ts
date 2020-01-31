@@ -21,10 +21,8 @@ export class ApiService {
     return this.httpClient.get<Product>(`${this.PHP_API_SERVER}/API/products/${id}`);
   }
 
-  postOrder(newOrder: Order){
-    console.log("ff");
-
-    return this.httpClient.post(`${this.PHP_API_SERVER}/API/orders`, {data: newOrder} );
+  postOrder(newOrder: Order): Observable<number>{
+    return this.httpClient.post<number>(`${this.PHP_API_SERVER}/API/orders`, {data: newOrder} );
   }
 
 }
