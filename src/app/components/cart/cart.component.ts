@@ -87,11 +87,11 @@ export class CartComponent implements OnInit, OnDestroy {
     this.totalPrice = this.cartService.getTotalPrice();
 
     this.apiService.postOrder(order).subscribe( (newOrderId: number) =>{
-      //  this.openDialog(newOrderId);
+      this.showOrHideOrderForm();
+      this.initForm();
+      this.openDialog(newOrderId);
     });
-    this.showOrHideOrderForm();
-    this.initForm();
-    this.openDialog(23);
+
    }
 
   openDialog(newOrderId: number): void {
