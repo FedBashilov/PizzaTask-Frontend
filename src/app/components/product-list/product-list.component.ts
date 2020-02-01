@@ -12,13 +12,11 @@ import { Product } from '../../models/product.model';
   styleUrls: ['./product-list.component.css']
 })
 
-
-
 export class ProductListComponent implements OnInit {
 	public allProductsId: number[] = [];
 	public allProducts: Product[] = [];
 
-	constructor(public apiService: ApiService, private cartService: CartService) { }
+	constructor(public apiService: ApiService, public cartService: CartService) { }
 
 	ngOnInit() {
 		this.apiService.getAllProductsId().subscribe( (allProductsId: number[]) => {
@@ -29,13 +27,6 @@ export class ProductListComponent implements OnInit {
 	  			});
 	  		});
   		});
- }
-
-  addProductToCart(id, name, price){
-    //do animation
-    console.log(id, name, price);
-
-    this.cartService.addToCart(id, name, price);
   }
 
 }

@@ -17,7 +17,7 @@
 			</div>
 		</div>
 		<div class="cart_button">
-			<button type="button" name="button" (click)="addProductToCart(product.id, product.name, product.price);">Add to Cart</button>
+			<button class="add_to_cart_button" type="button" name="button" (click)="this.cartService.addToCart(product.id, product.name, product.price);">Add to Cart</button>
 		</div>
 	</div>
 </div>

@@ -19,6 +19,7 @@ export class CartComponent implements OnInit, OnDestroy {
   public products = [];
   public cartCounter: number;
   public totalPrice: number;
+  public delivery: number = 3;
 
   constructor(private apiService: ApiService, public cartService: CartService, private fb: FormBuilder ) {
     this.subscription = this.cartService.cartCounter.subscribe(cartCounter => { this.cartCounter = cartCounter; });
@@ -44,17 +45,12 @@ export class CartComponent implements OnInit, OnDestroy {
       Validators.pattern(/^(\+)?[0123456789]+$/)
     ]
   ],
-    email: ['', [
-      Validators.email
-    ]
-  ],
     address: ['',[
       Validators.required
     ]
-  ],
-    comment: ['']
-   });
-  }
+  ]
+  });
+}
 
   isControlInvalid(controlName: string): boolean {
   const control = this.orderForm.controls[controlName];
@@ -65,62 +61,59 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-  const controls = this.orderForm.controls;
+    const controls = this.orderForm.controls;
 
-   /** Проверяем форму на валидность */
-   if (this.orderForm.invalid) {
-    /** Если форма не валидна, то помечаем все контролы как touched*/
-    Object.keys(controls)
-     .forEach(controlName => controls[controlName].markAsTouched());
-
-     /** Прерываем выполнение метода*/
-     return;
+     /** Проверяем форму на валидность */
+    if (this.orderForm.invalid) {
+      /** Если форма не валидна, то помечаем все контролы как touched*/
+      Object.keys(controls)
+       .forEach(controlName => controls[controlName].markAsTouched());
+       /** Прерываем выполнение метода*/
+      return;
     }
 
-   /** TODO: Обработка данных формы */
+     /** TODO: Обработка данных формы */
 
-   let order: Order = new Order;
-   order.client_name = this.orderForm.value.name;
-   order.client_phone = this.orderForm.value.phone;
-   order.client_email = this.orderForm.value.email;
-   order.client_address = this.orderForm.value.address;
-   order.client_comment = this.orderForm.value.comment;
+    let order: Order = new Order;
+    order.client_name = this.orderForm.value.name;
+    order.client_phone = this.orderForm.value.phone;
+    order.client_address = this.orderForm.value.address;
 
-   let cartItems: Array<CartItem> = this.cartService.getItems();
-   for(let i=0; i<cartItems.length; i++){
-     order.products[i] = new OrderProduct;
-     order.products[i].id = cartItems[i].id;
-     order.products[i].amount = cartItems[i].amount;
+
+    let cartItems: Array<CartItem> = this.cartService.getItems();
+    for(let i=0; i<cartItems.length; i++){
+      order.products[i] = new OrderProduct;
+      order.products[i].id = cartItems[i].id;
+      order.products[i].amount = cartItems[i].amount;
+    }
+    this.cartService.clearCart();
+    this.products=this.cartService.getItems();
+    this.totalPrice = this.cartService.getTotalPrice();
+
+    this.apiService.postOrder(order).subscribe( (newOrderId: number) =>{
+        alert(newOrderId);
+    });
    }
-   this.cartService.clearCart();
-   this.products=this.cartService.getItems();
-   this.totalPrice = this.cartService.getTotalPrice();
-
-   this.apiService.postOrder(order).subscribe( (newOrderId: number) =>{
-      alert(newOrderId);
-   });
-
-}
 
 
  showOrHideOrderForm(){
-   let containerOrder: any = document.getElementsByClassName("container_order")[0];
+   let movingOrderForm: any = document.getElementsByClassName("moving_order_form")[0];
    let mainCart: any = document.getElementsByClassName("main_cart")[0];
    let curtain: any = document.getElementsByClassName("curtain")[0];
 
-   if(containerOrder.classList.contains("show")){
-     containerOrder.classList.remove("show");
+   if(movingOrderForm.classList.contains("show")){
+     movingOrderForm.classList.remove("show");
      mainCart.classList.remove("active");
      curtain.classList.remove("on");
      curtain.classList.add("off");
    } else {
-     containerOrder.classList.add("show");
+     movingOrderForm.classList.add("show");
      mainCart.classList.add("active");
      curtain.classList.remove("off");
      curtain.classList.add("on");
 
      this.products = this.cartService.getItems();
-     this.totalPrice = this.cartService.getTotalPrice();
+     this.totalPrice = this.cartService.getTotalPrice()+this.delivery;
      //this.cartCounter = this.cartService.getItems();
    }
 

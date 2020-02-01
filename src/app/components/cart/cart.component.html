@@ -1,15 +1,15 @@
 <div class="main_cart" (click)="showOrHideOrderForm()">
   <div class="main_cart_icon">
     <img src="assets/cart.png" alt="" height="20px" width="20px">
-  </div>
-  <div class="cart_counter">
-    {{this.cartCounter}}
+    <div class="cart_counter">
+      {{this.cartCounter}}
+    </div>
   </div>
 </div>
 
-<div class="container_order">
+
   <div class="moving_order_form">
-    <div class="">
+    <div class="cart_title">
       Cart
     </div>
     <div class="product" *ngFor="let product of products; index as i;">
@@ -17,63 +17,73 @@
         {{product.name}}
       </div>
       <div class="product_price">
-        {{product.price}}$ x {{product.amount}}
+        {{product.price}}$ х {{product.amount}}
       </div>
 
       <div class="plus_minus_product">
-        <button type="button" name="minus_product"
+        <button class="minus_product_button" type="button" name="minus_product"
         (click)="this.cartService.deleteFromCart(product.id);
         this.products = this.cartService.getItems();
-        this.totalPrice = this.cartService.getTotalPrice(); ">-</button>
+        this.totalPrice = this.cartService.getTotalPrice()+this.delivery; ">-</button>
         <div>
           1
         </div>
-        <button type="button" name="minus_product"
+        <button class="plus_product_button" type="button" name="minus_product"
         (click)="this.cartService.addToCart(product.id, product.name, product.price);
         this.products = this.cartService.getItems();
-        this.totalPrice = this.cartService.getTotalPrice();">+</button>
+        this.totalPrice = this.cartService.getTotalPrice()+this.delivery;">+</button>
       </div>
     </div>
-    <div class="total">
-      total: {{totalPrice}}
+    <div class="ifCartExist" *ngIf="this.products[0]; else emptyCart">
+      <div class="delivery">
+        delivery {{delivery}}$
+      </div>
+      <div class="total">
+        total: {{totalPrice}}$
+      </div>
     </div>
+    <ng-template #emptyCart>Yout cart is empty</ng-template>
+
+
     <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-      <label for="name">Name</label>
-      <input type="text" id="name" formControlName="name" />
-      <div class="error" *ngIf="isControlInvalid('name')">
-        The name must consist only of English letters
+      <div class="form_element">
+        <mat-form-field>
+        <input matInput type="text" id="name" formControlName="name" placeholder = "Name">
+        </mat-form-field>
+        <div class="error" *ngIf="isControlInvalid('name')">
+          The name must consist only of English letters
+        </div>
       </div>
-      <br/><br/>
-
-      <label for="phone">Phone</label>
-      <input type="text" id="phone" formControlName="phone" />
-      <div class="error" *ngIf="isControlInvalid('phone')">
-        A phone number can only consist of numbers and a plus sign
+      <div class="form_element">
+        <mat-form-field>
+        <input matInput type="text" id="phone" formControlName="phone" placeholder = "Phone">
+        </mat-form-field>
+        <div class="error" *ngIf="isControlInvalid('phone')">
+          A phone number can only consist of numbers and a plus sign
+        </div>
       </div>
-      <br/><br/>
-
-      <label for="address">Address</label>
-      <input type="text" id="address" formControlName="address" />
-      <div class="error" *ngIf="isControlInvalid('address')">
-        Please enter the delivery address
+      <div class="form_element">
+        <mat-form-field>
+        <input matInput type="text" id="address" formControlName="address" placeholder = "Address">
+        </mat-form-field>
+        <div class="error" *ngIf="isControlInvalid('address')">
+          Please enter the delivery address
+        </div>
       </div>
-      <br/><br/>
 
-      <label for="email">Email</label>
-      <input type="text" id="email" formControlName="email" />
-      <br/><br/>
+      <div class="form_element">
+          <mat-checkbox color="primary"> I agree to the processing of personal data</mat-checkbox>
+      </div>
 
-      <label for="comment">Comment</label>
-      <textarea rows="5" cols="45" name="text" formControlName="comment" ></textarea>
-      <br/><br/>
 
-      <p><input type="checkbox" name="policy" value="policy" checked readonly> I agree to the processing of personal data</p>
-
-      <button type="submit">Make an order</button>
+      <button class="make_an_order_button" type="submit">Make an order</button>
     </form>
+    <div class="successful_order">
+      Your order № 23 has been successfully placed! Wait for a call from the operator soon.
+    </div>
 
   </div>
-</div>
+
 
 
 <div class="curtain off" (click)="showOrHideOrderForm()">

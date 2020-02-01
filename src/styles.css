@@ -6,3 +6,6 @@ body{
   font-family:  Open Sans Condensed;
   background-color: #ededed;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

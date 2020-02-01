@@ -59,11 +59,13 @@ export class CartService {
 
   getItems(){
     let items: CartItem[] = [];
-    for(let i : number = 0, len : number = localStorage.length; i < len; i++){
-      items[i] = new CartItem;
-      items[i] = JSON.parse(localStorage.getItem(localStorage.key(i)));
-      items[i].id = parseInt(localStorage.key(i));
-    }
+    let bufItem: CartItem;
+    Object.keys(localStorage).forEach((key) => {
+      bufItem = new CartItem;
+      bufItem = JSON.parse(localStorage.getItem(key));
+      bufItem.id = parseInt(key);
+      items.push(bufItem);
+    });
     return items;
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from  'rxjs';
 
 import { Product } from  './../models/product.model';
@@ -9,6 +9,7 @@ import { Order } from  './../models/order.model';
   providedIn: 'root'
 })
 export class ApiService {
+
   public PHP_API_SERVER = "https://pizzatask.000webhostapp.com";
 
   constructor(private httpClient: HttpClient) {}
