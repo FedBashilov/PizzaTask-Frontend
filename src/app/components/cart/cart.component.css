@@ -27,6 +27,7 @@
 /*moving order form*/
 
 .moving_order_form{
+  width:500px;
   height: calc(100vh - 90px);
   overflow-y: auto;
   color: black;
@@ -42,24 +43,58 @@
   transform: translateX(0%);
 }
 
+/*cart_list*/
+.cart_list{
+  margin-bottom: 10px;
+}
 .cart_title{
   border-bottom: 1px solid black;
+  text-align: center;
 }
 .total{
   border-top: 1px solid black;
+  padding-top: 5px;
+  margin-bottom: 20px;
+}
+.total_price{
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
 input.ng-touched.ng-invalid{
  border-color: red;
 }
 
+/*--------order_form-----*/
+.order_form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.order_form_title{
+  margin-bottom: 10px;
+}
+.order_form_title, .cart_title{
+  font-size: 1.2em;
+  font-weight: 500;
+}
+.form_element{
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .error{
   color: red;
+  font-size: 0.8em;
 }
+
 /*-------------------------------*/
 .product{
   display: grid;
-  grid-template-columns: 50% 35% 15%;
+  align-items: center;
+  grid-template-columns: 70% 20% 10%;
   grid-gap: 10px;
   padding: 10px 30px;
 }
@@ -106,8 +141,17 @@ input.ng-touched.ng-invalid{
 	border: 1px solid #ffcc4a;
 	transform: scale(0.85);
 }
+/*-----*/
+.delivery, .total{
+  display: grid;
+  grid-template-columns: 70% 20%;
+  grid-gap: 10px;
+  padding: 20px 30px 10px;
+}
 
-.make_an_order_button{
+
+/*------------------------------*/
+.place_an_order_button{
 	padding: 10px 20px;
 	text-align: center;
 	text-decoration: none;
@@ -119,12 +163,12 @@ input.ng-touched.ng-invalid{
 	border: 2px solid #ffcc4a;
 	color: black;
 	outline:none;
+   border-radius: 6px;
 }
 
-
-.make_an_order_button:active{
+.place_an_order_button:active{
 	background-color: #ffcc4a;
-		border: 1px solid #ffcc4a;
+	border: 1px solid #ffcc4a;
 	transform: scale(0.95);
 }
 /*-------------------------------*/
@@ -144,4 +188,11 @@ input.ng-touched.ng-invalid{
 .curtain.on{
   visibility: visible;
   opacity: 0.5;
+}
+
+
+@media all and (max-width: 540px){
+  .moving_order_form{
+    width: calc(100vw - 40px);
+  }
 }

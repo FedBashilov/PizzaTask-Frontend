@@ -13,6 +13,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { HeaderComponent } from './components/header/header.component';
 import { CartComponent } from './components/cart/cart.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SuccessfulOrderDialogComponent } from './components/successful-order-dialog/successful-order-dialog.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProductListComponent,
     routingComponents,
     HeaderComponent,
-    CartComponent
+    CartComponent,
+    SuccessfulOrderDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +35,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatFormFieldModule,
     MatDialogModule,
     MatInputModule,
-     MatCheckboxModule
+    MatCheckboxModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [SuccessfulOrderDialogComponent]
 })
 export class AppModule { }

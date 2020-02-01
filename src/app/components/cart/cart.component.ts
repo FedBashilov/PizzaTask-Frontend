@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Subscription } from "rxjs";
 
 import { CartService } from '../../services/cart.service';
@@ -7,6 +8,8 @@ import { ApiService } from '../../services/api.service';
 import { Order } from '../../models/order.model';
 import { CartItem } from '../../models/cart-item.model';
 import { OrderProduct } from '../../models/order-product.model';
+
+import { SuccessfulOrderDialogComponent } from '../successful-order-dialog/successful-order-dialog.component';
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +24,7 @@ export class CartComponent implements OnInit, OnDestroy {
   public totalPrice: number;
   public delivery: number = 3;
 
-  constructor(private apiService: ApiService, public cartService: CartService, private fb: FormBuilder ) {
+  constructor(private apiService: ApiService, public cartService: CartService, private fb: FormBuilder, public dialog: MatDialog ) {
     this.subscription = this.cartService.cartCounter.subscribe(cartCounter => { this.cartCounter = cartCounter; });
   }
 
@@ -53,32 +56,25 @@ export class CartComponent implements OnInit, OnDestroy {
 }
 
   isControlInvalid(controlName: string): boolean {
-  const control = this.orderForm.controls[controlName];
+    const control = this.orderForm.controls[controlName];
 
-   const result = control.invalid && control.touched;
+    const result = control.invalid && control.touched;
 
-   return result;
+    return result;
   }
 
   onSubmit() {
     const controls = this.orderForm.controls;
-
-     /** Проверяем форму на валидность */
     if (this.orderForm.invalid) {
-      /** Если форма не валидна, то помечаем все контролы как touched*/
       Object.keys(controls)
        .forEach(controlName => controls[controlName].markAsTouched());
-       /** Прерываем выполнение метода*/
       return;
     }
-
-     /** TODO: Обработка данных формы */
 
     let order: Order = new Order;
     order.client_name = this.orderForm.value.name;
     order.client_phone = this.orderForm.value.phone;
     order.client_address = this.orderForm.value.address;
-
 
     let cartItems: Array<CartItem> = this.cartService.getItems();
     for(let i=0; i<cartItems.length; i++){
@@ -91,9 +87,21 @@ export class CartComponent implements OnInit, OnDestroy {
     this.totalPrice = this.cartService.getTotalPrice();
 
     this.apiService.postOrder(order).subscribe( (newOrderId: number) =>{
-        alert(newOrderId);
+      //  this.openDialog(newOrderId);
     });
+    this.showOrHideOrderForm();
+    this.initForm();
+    this.openDialog(23);
    }
+
+  openDialog(newOrderId: number): void {
+    const dialogRef = this.dialog.open(SuccessfulOrderDialogComponent, {
+      width: 'auto', height: 'auto',
+      data: {newOrderId: newOrderId}
+    });
+
+
+  }
 
 
  showOrHideOrderForm(){
