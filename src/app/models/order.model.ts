@@ -6,4 +6,9 @@ export class Order{
   public client_address: string = null;
   public products: OrderProduct[] = [];
 
+  constructor(name, phone, address){
+    this.client_name = name;
+    this.client_phone = phone;
+    this.client_address = address;
+  }
 }

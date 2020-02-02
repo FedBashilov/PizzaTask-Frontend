@@ -1,10 +1,10 @@
 <div class="wrapper">
-	<div class="product" *ngFor="let product of allProducts; index as i;">
+	<div class="product_card" *ngFor="let product of allProducts; index as i;">
 		<div class="image">
-			<img class="product_image" [defaultImage]="'assets/loading.png'" [lazyLoad]='this.apiService.PHP_API_SERVER+"/backend/product-photos/"+product.photo'>
+			<img class="product_card_image" [defaultImage]="'assets/loading.png'" [lazyLoad]='this.apiService.PHP_API_SERVER+"/backend/product-photos/"+product.photo'>
 		</div>
-		<div class="product_info">
-			<div class="horizontal_flexbox">
+		<div class="product_card_content">
+			<div class="row_flexbox">
 				<div class="product_name notranslate">
 					{{product.name}}
 				</div>

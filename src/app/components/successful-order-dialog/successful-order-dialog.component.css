@@ -8,12 +8,14 @@ button{
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-
-	-webkit-transition-duration: 0.2s; /* Safari */
+  cursor: pointer;
+	-webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s; 
+  -o-transition-duration: 0.2s;
 	transition-duration: 0.2s;
 	background-color: #ffd56b;
 	border: 2px solid #ffcc4a;
- border-radius: 6px;
+  border-radius: 6px;
 	color: black;
 	outline:none;
 }
